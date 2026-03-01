@@ -1,0 +1,9 @@
+node_modules/
+.env
+dist/
+build/
+.DS_Store
+npm-debug.log
+test.pdf
+test2.js
+test_parse.js
