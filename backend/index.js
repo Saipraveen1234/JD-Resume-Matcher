@@ -133,7 +133,9 @@ app.post('/api/match', async (req, res) => {
         1. Preserve the candidate's actual job titles, companies, dates, degrees, and core truth. Do not invent fake experience.
         2. Vigorously rephrase summary and experience bullet points to natively embed the specific keywords and phrasing required by the Job Description.
         3. Quantify achievements where plausible based on original text.
-        4. You MUST return ONLY the final, polished, ready-to-use resume formatted STRICTLY using the exact HTML template below. Do NOT use markdown. Do NOT wrap it in \`\`\`html tags. Just return the raw HTML string.
+        4. STAY STRICTLY WITHIN ONE PAGE. Condense information, use fewer bullet points for older roles, and be extremely concise. A two-page resume will fail this task.
+        5. You MUST highlight the NEW ATS keywords and newly modified phrases that you inject by wrapping them in this exact HTML tag: <mark style="background-color: #bbf7d0; padding: 0 2px; border-radius: 2px;">[text]</mark>.
+        6. You MUST return ONLY the final, polished, ready-to-use resume formatted STRICTLY using the exact HTML template below. Do NOT use markdown. Do NOT wrap it in \`\`\`html tags. Just return the raw HTML string.
 
         <div class="resume-container">
             <div class="header">

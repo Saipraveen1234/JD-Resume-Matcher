@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import LoadingScreen from './components/LoadingScreen';
 
 function Dashboard() {
     const [jobDescription, setJobDescription] = useState('');
@@ -27,7 +28,7 @@ function Dashboard() {
             const formData = new FormData();
             formData.append('resume', resumeFile);
 
-            const parseRes = await fetch('http://localhost:5001/api/parse-resume', {
+            const parseRes = await fetch('http://localhost:5002/api/parse-resume', {
                 method: 'POST',
                 body: formData,
             });
@@ -39,7 +40,7 @@ function Dashboard() {
             }
 
             // 2. Match JD and Resume
-            const matchRes = await fetch('http://localhost:5001/api/match', {
+            const matchRes = await fetch('http://localhost:5002/api/match', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -55,7 +56,8 @@ function Dashboard() {
             }
 
             // 3. Navigate to results page with data
-            navigate('/results', { state: { results: matchData, resumeText: parseData.text } });
+            const pdfUrl = URL.createObjectURL(resumeFile);
+            navigate('/results', { state: { results: matchData, resumeText: parseData.text, pdfUrl: pdfUrl } });
 
         } catch (error) {
             console.error("Analysis failed:", error);
@@ -67,6 +69,7 @@ function Dashboard() {
 
     return (
         <div className="min-h-screen bg-neutral-950 text-neutral-100 selection:bg-indigo-500/30 font-sans">
+            {loading && <LoadingScreen />}
             {/* Header */}
             <header className="border-b border-white/5 bg-black/40 backdrop-blur-md sticky top-0 z-50">
                 <div className="max-w-4xl mx-auto px-6 h-20 flex items-center justify-between">
